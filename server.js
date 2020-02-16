@@ -54,7 +54,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.login("NTE4OTY3NzY5NTg1NDE4MjUw.D2yc_Q.P4nXaukQSe5QaYeqqcd-SkJoS9o");
+client.login("NDcxODY1NDE4NjU5NjU5Nzk2.XfFO4g.ejYe5s3m4e8FPdZqhM1dEe99d_0");
 
 // Function time!
 function findUser(userID)
@@ -176,7 +176,7 @@ client.on('message', msg => {
      send = "F";
   }
   
-  else if (msg.content.includes('test') || (dm == true && msg.author.id != client.user.id)) 
+  else if (msg.content.includes('aymeric') || (dm == true && msg.author.id != client.user.id) || msg.content.includes(client.user.id)) 
   {
     
     var userID = msg.author.id;
@@ -784,7 +784,10 @@ client.on('message', msg => {
       {
           msg.channel.startTyping();
         
-          setTimeout(function{msg.channel.send(send)
+          setTimeout(function(){
+                     
+                     msg.channel.send(send);
+                     msg.channel.stopTyping();
       
       
       }, 3000);
