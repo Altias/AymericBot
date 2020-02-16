@@ -212,7 +212,164 @@ client.on('message', msg => {
        {
          name = "<@"+userID+">";
        }
+    
+        function addRep()
+         {
+            console.log("Adding rep to user with " + users[n].rep);
+            if (users[n].rep < 100)
+            {
+               users[n].rep = users[n].rep + 5;
+               
+            }
+           
+           console.log("Rep now " + users[n].rep);
+         }
+  
+         function remRep()
+         {
+            if (users[n].rep > 0)
+            {
+              users[n].rep = users[n].rep - 5;
+            }
+         }
 
+          if (messageL.includes("compliment"))
+           {
+              var toSend2 = Math.floor(Math.random() * 3);
+
+              if (messageL.includes(" me"))
+             {
+               if (users[n].rep > 25)
+               {
+                if (toSend2 ==0)
+                {
+                   send = 'You look lovely today ' + name;
+                }   
+
+                else if (toSend2 == 1)
+                {
+                  send = 'I am so proud of you ' + name;
+                }
+
+               else
+               {
+                  send = 'You look lovely today ' + name;
+               }
+              }
+               
+              else
+              {
+               send = 'Ah, ' + name + '... you are certainly... intriguing';
+              }
+
+            }
+
+             else if (messageL.includes("<@") && messageL.includes(">"))
+             {
+                
+               // var tag = messageL.substring(messageL.indexOf("<") + 2, messageL.indexOf(">"));
+                var tag = getTagID();
+                var g = findUser(tag);
+                
+                if (g == -1)
+                {
+                  send = "I am afraid we are not aquainted, but I am sure they are lovely. Tell them to introduce themself sometime";
+                }
+               
+                else
+                {
+                  if (users[g].nick == null)
+                  {
+                    tag = "<@"+tag+">";
+                  }
+                  
+                  else
+                  {
+                    tag = users[g].nick;
+                  }
+
+                   if (toSend2 ==0)
+                   {
+                      send = 'You look lovely today ' + tag;
+                   }   
+          
+                   else if (toSend2 == 1)
+                   {
+                     send = 'I am so proud of you ' + tag;
+                   } 
+          
+                  else
+                  {
+                     send = 'You look lovely today ' + tag;
+                  } 
+                }
+             }
+           }
+    
+           else if (messageL.includes('call me') || messageL.includes('my name is'))
+           {
+             var call;
+             var skip = 0;
+             
+             if (messageL.includes('call me'))
+             {
+                call = 'call me ';
+                skip = 8;
+             }
+             else
+             {
+               call = 'my name is ';
+               skip = 11;
+             }
+             
+             var newNick = msg.contents.substring(messageL.indexOf(call) + skip);
+             
+             users[n].nick = newNick;
+             
+             
+             send = "I shall call you '" + users[n].nick + "' from now on";
+             
+           }
+    
+          else if (((messageL.includes("give") || messageL.includes("need") || (messageL.includes("can") && messageL.includes("have"))) && messageL.includes("nickname")))
+           {
+               var nick = giveNick();
+       
+              if (messageL.includes(" me"))
+              {
+        
+                 send = name + " your name is " + nick;
+              }
+       
+              else if (messageL.includes("<@"))
+              {
+                 var u;
+                 var u1 = getTagID();
+                 var x = findUser(u1);
+                
+                 if (x == -1)
+                 {
+                   u = messageL.substring(messageL.indexOf("<"), messageL.indexOf(">") + 1);
+                 }
+                
+                else if (users[x].nick == null)
+                {
+                  u = messageL.substring(messageL.indexOf("<"), messageL.indexOf(">") + 1);
+                }
+                
+                else
+                {
+                  u = users[x].nick;
+                }
+          
+                 bot.sendMessage({to:channelID,message: u + " your name is " + nick});
+              }
+       
+              else
+              {
+                bot.sendMessage({to:channelID,message: "To whom should I give a nickname?"});
+              }
+           }
     
   
     
