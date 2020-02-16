@@ -101,6 +101,8 @@ morning(false);
 
 // Message Recieved
 
+
+
 client.on('message', msg => {
   
   var messageL = msg.content.toLowerCase();
@@ -123,7 +125,7 @@ client.on('message', msg => {
   
   var dm = checkDM();
   
-  client.user.setActivity('Version 3.0', { type: 'WATCHING' });
+  client.user.setActivity('you with Version 3.0', { type: 'LISTENING' });
   
     function giveNick()
   {
