@@ -55,6 +55,7 @@ client.on('ready', () => {
 });
 
 client.login("NDcxODY1NDE4NjU5NjU5Nzk2.XfFO4g.ejYe5s3m4e8FPdZqhM1dEe99d_0");
+client.user.setActivity('Version 3.0', { type: 'TESTING' })
 
 // Function time!
 function findUser(userID)
