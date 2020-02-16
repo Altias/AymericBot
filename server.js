@@ -424,6 +424,200 @@ client.on('message', msg => {
              addRep();
            }
     
+           else if (messageL.includes("greet") && messageL.includes("<@"))
+           {
+              var tag = getTagID();
+             
+              var u = findUser(tag);
+             
+              if (u == -1)
+              {
+                send = "Greetings <@" + tag +">";
+              }
+             
+              else
+              {
+                  if (users[u].rep > 25)
+                  {
+                      send = "Greetings " + users[u].nick;
+                  }
+                
+                  else
+                  {
+                    send = "Must I? Speaking with " + users[u].nick + " can be... difficult at times";
+                  }
+              }
+           }
+    
+          else if (messageL.includes("how are you") || messageL.includes("what's up") || messageL.includes("whats up") || messageL.includes("you ok") || messageL.includes("you alright"))
+           {
+              var o = Math.floor(Math.random() * 3);
+       
+              if (o == 0)
+              {
+                send = "I am well, thank you";
+              }
+       
+              else if (o == 1)
+              {
+                 send = "I have been better I suppose";
+              }
+       
+              else
+              {
+                send = "I think I've had one too many drinks";
+              }
+             
+             addRep();
+           }
+    
+          else if (messageL.includes("want") && messageL.includes("drink"))
+           {
+             if (users[n].rep > 75)
+             {
+               send = "Ah, of course! Do not worry yourself with payment, I shall cover it";
+             }
+             
+             else if (users[n].rep > 25)
+             {
+               send = "Certainly";
+             }
+             
+             else
+             {
+               send = "Mayhap another day. I have much to do.";
+             }
+           }
+    
+          else if((messageL.includes("what") && messageL.includes("wrong")))
+           {
+               if(users[n].rep > 25)
+               {
+                 send = "Pray, do not concern yourself with my well being " + name;
+               }
+             
+               else
+               {
+                 send = "It is not your concern";
+               }
+             
+             addRep();
+           }
+    
+          else if (messageL.includes("good luck") || messageL.includes("keep trying") || messageL.includes("you can do it"))
+           {
+             if (users[n].rep > 25)
+             {
+               send = "I shall do my best";
+             }
+             
+             else
+             {
+               send = "An odd thing for someone like you to say";
+             }
+           }
+    
+          else if (messageL.includes("how do you feel about") || messageL.includes("what do you think of"))
+           {
+               if (messageL.includes(" me"))
+               { 
+                 
+                 if (users[n].id == 385943980053102592)
+                 {
+                    send = "Ah, " + name + "! You are my creator, that would make it very hard to dislike you"};
+                 }
+          
+
+                 else
+                 {
+ 
+                   
+
+                    if (users[n].rep > 75)
+                    {
+                       bot.sendMessage({to:channelID,message: name + ", I truely consider you one of my dearest companions"});
+           
+                    }
+
+                    else if (users[n].rep > 50)
+                    { 
+                       bot.sendMessage({to:channelID,message: name +"! You are a very kindhearted individual and my trusted friend"});
+                    }
+                   
+                    else if (users[n].rep > 25)
+                    {
+                       bot.sendMessage({to:channelID, message: "You are incredibly talented, " + name + ", I respect you greatly"});
+                    }
+
+                    else
+                    {
+                       bot.sendMessage({to:channelID,message: name + "... You are very... how shall I put this... interesting"});
+                    }
+                 }
+               }
+
+                else if (messageL.includes("<@"))
+                {
+                  var cID = getTagID();
+                 // console.log("Tagged ID: " + cID);
+
+                  if (cID == 385943980053102592)
+                  {
+                    bot.sendMessage({to:channelID, message:"Ah, <@" + cID+ ">! How could I dislike my creator?"});
+                  }
+
+                  else
+                  {
+                     var c = findUser(cID);
+                     var call;
+                    
+                    if (c != -1)
+                    {
+                      if (users[c].nick != null)
+                      {
+                        call = users[c].nick;
+                      }
+                      
+                      else
+                      {
+                        call = "<@" + users[c].id + ">";
+                      }
+                    }
+                    
+                    if (c == -1)
+                    {
+                      bot.sendMessage({to:channelID, message:"I am afraid I'm not familiar with whom you speak of. Ask them to introduce themself sometime."});
+                    }
+
+                    else if (users[c].rep > 75)
+                    {
+                       bot.sendMessage({to:channelID,message: call + " is truely one of my dearest companions."});
+
+                    }
+
+                    else if (users[c].rep > 50)
+                    {
+                       bot.sendMessage({to:channelID,message: call + "! Truely, a very kind individual and my trusted friend"});
+                    }
+                    
+                    else if (users[c].rep > 25)
+                    {
+                       bot.sendMessage({to:channelID, message: call + "is incredibly talented, I respect them greatly"});
+                    }
+
+                    else
+                    {
+                       bot.sendMessage({to:channelID,message:call + "... They are... interesting... sometimes"});
+                    }
+                  }
+               }
+
+               else
+               {
+                  bot.sendMessage({to:channelID, message:"You have not tagged anyone for me to give an opinion on"});
+               }
+           }
+    
   
     
   }
