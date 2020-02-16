@@ -708,18 +708,18 @@ client.on('message', msg => {
              }
            }
     
-               else if (messageL.includes("why"))
+          else if (messageL.includes("why"))
            {
              var w = Math.floor(Math.random() * 3);
       
              if (w == 0)
              {
-               bot.sendMessage({to:channelID, message: "I honestly do not know"});
+               send = "I honestly do not know";
              }
        
              else if (w == 1)
              {
-               bot.sendMessage({to:channelID, message: "It had to be done"});
+               send =  "It had to be done";
              }
       
              else
@@ -727,18 +727,51 @@ client.on('message', msg => {
                //var u = genUser();
                // Will set up manually with our IDs for now after getting nowhere. Intend to return to this, for now dont call genUser()
               
-               var u = users[Math.floor(Math.random() * users.length)];
-               if (u.nick == null)
-               {
-                    bot.sendMessage({to:channelID, message: "<@" + u.id + "> suggested it to me"});
-               }
+               var u = msg.guild.members.random()
+
+               send = u.nick + " suggested it to me";
                
-               else
-               {
-                 bot.sendMessage({to:channelID, message: u.nick + " suggested it to me"});
-               }
              }
            }
+    
+          else  if (messageL.includes('?'))
+           {
+               var yn = Math.floor(Math.random() * 2);
+
+               if (yn == 0)
+               {
+                 send = "Yes"
+               }
+
+               else
+               {
+                 send = "Truthfully, no";
+               }
+            }
+    
+          else
+           {
+             if (dm == false)
+             {
+               var toSend = Math.floor(Math.random() * 3);
+
+               if (toSend == 0)
+               {
+                  send = 'THE EYES! CAST THEM INTO THE ABYSS!';
+               }
+
+               else if (toSend ==1)
+               {
+                  send = 'A drink! We should make time for one.'
+               }
+
+              else
+              {
+                 send = 'Come, then! Let us see whom the Fury favors!';
+              }
+             }
+             
+            }
            
     
   
@@ -749,6 +782,12 @@ client.on('message', msg => {
     
     if (send != null)
       {
-          msg.channel.send(send);
+          msg.channel.startTyping();
+        
+          setTimeout(function{msg.channel.send(send)
+      
+      
+      }, 3000);
+        
       }
 });
