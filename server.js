@@ -90,6 +90,7 @@ if (millisTill2 < 0 || hasToday == true) {
   setTimeout(function(){
     
     const channel = client.channels.get("477532221964812339");
+    channel.send("Good morning my friends!");
     morning(true);
     
   }, millisTill2);
@@ -97,12 +98,35 @@ if (millisTill2 < 0 || hasToday == true) {
 
 morning(false);
 
-// Message choices
+// Message Recieved
 
 client.on('message', msg => {
-  // If the message is "ping"
-  if (msg.content.includes('test')) {
-    // Send "pong" to the same channel
+  
+   function checkDM()
+  {
+    var dmChan = msg.channel.type;
+  
+    if (dmChan == 'dm')
+    {
+      return(true);
+    }
+    
+    else
+      {
+        return(false);
+      }
+    
+  }
+  
+  var dm = checkDM();
+  var done = false
+  
+  //First we choose the message
+  
+  var send = "";
+  if (msg.content.includes('test') || (dm == true && done == false)) {
+    
     msg.channel.send('done!');
+    done = true
   }
 });
