@@ -102,7 +102,7 @@ morning(false);
 
 client.on('message', msg => {
   
-  var messageL = msg.contents.toLowerCase();
+  var messageL = msg.content.toLowerCase();
   
    function checkDM()
   {
@@ -145,7 +145,7 @@ client.on('message', msg => {
   
     function getTagID()
   {
-    var t = msg.contents.substring(msg.contents.indexOf('<'), msg.contents.indexOf('>') + 1);
+    var t = msg.content.substring(msg.content.indexOf('<'), msg.content.indexOf('>') + 1);
     console.log("User Tag: " + t);
     
     var id;
@@ -322,7 +322,7 @@ client.on('message', msg => {
                skip = 11;
              }
              
-             var newNick = msg.contents.substring(messageL.indexOf(call) + skip);
+             var newNick = msg.content.substring(messageL.indexOf(call) + skip);
              
              users[n].nick = newNick;
              
@@ -362,13 +362,66 @@ client.on('message', msg => {
                   u = users[x].nick;
                 }
           
-                 bot.sendMessage({to:channelID,message: u + " your name is " + nick});
+                 send = u + " your name is ";
               }
        
               else
               {
-                bot.sendMessage({to:channelID,message: "To whom should I give a nickname?"});
+                send = "To whom should I give a nickname?";
               }
+           }
+    
+         else if (messageL.includes("hello") || messageL.includes("hi ") || messageL.includes("good morning") || (messageL.includes("hey") && messageL.charAt(messageL.indexOf("hey") - 1) != 't') || messageL.includes("hiya") || messageL.includes("hewwo"))
+           {
+              if (users[n].rep > 75)
+              {
+                 send = "Greetings my dearest, " + name;
+              }
+       
+       
+              else if (users[n].rep > 50)
+              {
+                 send = "Hello " + name + ", I am glad to see you";
+              }
+             
+              else if (users[n].rep > 25)
+              {
+                 send = "Greetings " + name +", are you well?";
+              }
+             
+              else
+              {
+                send = "Hello " + name +". If there is something you need I'm afraid I am quite busy at this time.";
+              }
+             
+             addRep();
+           }
+    
+           else if (messageL.includes("goodnight") || messageL.includes("goodbye") || messageL.includes("bye")|| messageL.includes("farewell"))
+           {  
+             if (users[n].rep > 75)
+             {
+               send = "Farewell " + name + "! I hope to see you again soon";
+             }
+             
+             else if (users[n].rep > 25)
+             {
+                send = "Farewell " + name;
+             }
+             
+             else
+             {
+                send = "Farewell " + name +". Do not bother checking in, I shall be fine";
+             }
+             
+             addRep();
+             
+           }
+    
+          else if (messageL.includes("thank you")||messageL.includes("thanks") || messageL.includes("thank u"))
+           {
+             send = "You are welcome";
+             addRep();
            }
     
   
@@ -379,6 +432,6 @@ client.on('message', msg => {
     
     if (send != null)
       {
-          msg.channel.send('done!');
+          msg.channel.send(send);
       }
 });
