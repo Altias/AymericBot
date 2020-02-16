@@ -5,6 +5,23 @@
 const express = require("express");
 const app = express();
 
+var fs = require('fs');
+var rawUsers;
+var users
+
+function updateUsers()
+{
+    rawUsers = fs.readFileSync('/app/usrs.json');
+    users = JSON.parse(rawUsers);
+}
+
+updateUsers();
+
+for (var i in users)
+{
+  console.log(users[i]);
+}
+
 // we've started you off with Express,
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -20,6 +37,15 @@ app.get("/", function(request, response) {
 const listener = app.listen(process.env.PORT, function() {
   console.log("Your app is listening on port " + listener.address().port);
 });
+const http = require('http');
+app.get("/", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+app.listen(listener.address.port);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 250000);
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -35,6 +61,24 @@ client.on('message', msg => {
 });
 
 client.login("NTE4OTY3NzY5NTg1NDE4MjUw.D2yc_Q.P4nXaukQSe5QaYeqqcd-SkJoS9o");
+
+// Function time!
+function findUser(userID)
+{
+  for (var i in users)
+  {
+      if (userID == users[i].id)
+      {
+        console.log("User found at " + i);
+        return(i);
+      }
+    
+  }
+  
+  return(-1);
+}
+
+// Message choices
 
 client.on('message', msg => {
   // If the message is "ping"
