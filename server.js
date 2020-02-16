@@ -176,7 +176,7 @@ client.on('message', msg => {
      send = "F";
   }
   
-  else if (msg.content.includes('aymeric') || (dm == true && msg.author.id != client.user.id) || msg.content.includes(client.user.id)) 
+  else if (messageL.includes('aymeric') || (dm == true && msg.author.id != client.user.id) || msg.content.includes(client.user.id)) 
   {
     
     var userID = msg.author.id;
