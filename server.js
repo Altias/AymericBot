@@ -524,7 +524,7 @@ client.on('message', msg => {
                  
                  if (users[n].id == 385943980053102592)
                  {
-                    send = "Ah, " + name + "! You are my creator, that would make it very hard to dislike you"};
+                    send = "Ah, " + name + "! You are my creator, that would make it very hard to dislike you";
                  }
           
 
@@ -535,26 +535,27 @@ client.on('message', msg => {
 
                     if (users[n].rep > 75)
                     {
-                       bot.sendMessage({to:channelID,message: name + ", I truely consider you one of my dearest companions"});
+                       send = name + ", I truely consider you one of my dearest companions";
            
                     }
 
                     else if (users[n].rep > 50)
                     { 
-                       bot.sendMessage({to:channelID,message: name +"! You are a very kindhearted individual and my trusted friend"});
+                       send = name +"! You are a very kindhearted individual and my trusted friend";
                     }
                    
                     else if (users[n].rep > 25)
                     {
-                       bot.sendMessage({to:channelID, message: "You are incredibly talented, " + name + ", I respect you greatly"});
+                       send = "You are incredibly talented, " + name + ", I respect you greatly";
                     }
 
                     else
                     {
-                       bot.sendMessage({to:channelID,message: name + "... You are very... how shall I put this... interesting"});
+                       send = name + "... You are very... how shall I put this... interesting";
                     }
                  }
-               }
+           }
+               
 
                 else if (messageL.includes("<@"))
                 {
@@ -563,7 +564,7 @@ client.on('message', msg => {
 
                   if (cID == 385943980053102592)
                   {
-                    bot.sendMessage({to:channelID, message:"Ah, <@" + cID+ ">! How could I dislike my creator?"});
+                    send = "Ah, <@" + cID+ ">! How could I dislike my creator?";
                   }
 
                   else
@@ -586,37 +587,159 @@ client.on('message', msg => {
                     
                     if (c == -1)
                     {
-                      bot.sendMessage({to:channelID, message:"I am afraid I'm not familiar with whom you speak of. Ask them to introduce themself sometime."});
+                      send = "I am afraid I'm not familiar with whom you speak of. Ask them to introduce themself sometime.";
                     }
 
                     else if (users[c].rep > 75)
                     {
-                       bot.sendMessage({to:channelID,message: call + " is truely one of my dearest companions."});
+                       send = call + " is truely one of my dearest companions.";
 
                     }
 
                     else if (users[c].rep > 50)
                     {
-                       bot.sendMessage({to:channelID,message: call + "! Truely, a very kind individual and my trusted friend"});
+                       send = call + "! Truely, a very kind individual and my trusted friend";
                     }
                     
                     else if (users[c].rep > 25)
                     {
-                       bot.sendMessage({to:channelID, message: call + "is incredibly talented, I respect them greatly"});
+                       send = call + "is incredibly talented, I respect them greatly";
                     }
 
                     else
                     {
-                       bot.sendMessage({to:channelID,message:call + "... They are... interesting... sometimes"});
+                       send = call + "... They are... interesting... sometimes";
                     }
                   }
                }
 
                else
                {
-                  bot.sendMessage({to:channelID, message:"You have not tagged anyone for me to give an opinion on"});
+                  send = "You have not tagged anyone for me to give an opinion on";
                }
+          }
+    
+           else if (messageL.includes('sorry') || messageL.includes('apologies'))
+           {
+             if (users[n].rep > 75)
+             {
+               send = "Do not worry, it would be very difficult for you to offend me";
+             }
+             
+             else if (users[n].rep > 25)
+             {
+                 send = "Do not worry, I have taken no offense";
+             }
+             
+             else
+             {
+               send = "I suppose I can forgive this";
+             }
+             
+             addRep();
            }
+    
+          else if (messageL.includes("where") && (messageL.includes("is") || messageL.includes("are") || messageL.includes("were")))
+           {
+             var locations = ["Ishgard", "Dravania","Thanalan","Ul'Dah","The Waking Sands","The Black Shroud","Gridania","La Noscea","Limsa Lominsa","Hingashi","Kugane","Doma","The Doman Enclave","Gyr Abania","Ala Mhigo","Garlemald","Your kitchen","Eorzea","The Far East","The Near East","Toto Rak","Zenith","The Aery","The Rising Stones","Mor Dhona", "Home","Nowhere important","Behind you","Sharlayan","Fortemps Manor", "The Vault"];
+             if (users[n].rep < 26)
+             {
+               send = "I do not need to answer your every call " + name;
+             }
+             
+             else
+             {
+              send = locations[Math.floor(Math.random()*locations.length)];
+             }
+             
+           }
+    
+          else if (messageL.includes('stop'))
+           {
+          
+            send = "Ah, my apologies";
+             
+             
+             remRep();
+           }
+    
+          else if (messageL.includes("i hate you") || messageL.includes("fuck you") || messageL.includes("bad aymeric") || messageL.includes("you suck"))
+           {
+             if (users[n].rep > 25)
+             {
+              send = "My apologies if I have given offense";
+             }
+             
+             else
+             {
+               send = "Ah, well it seems no matter what I do you will find reason to throw insults my way. To speak plain, I do not care anymore";
+             }
+              remRep();
+           }
+    
+           else if (messageL.includes("i love you") || messageL.includes("i love u"))
+           {
+              if (users[n].rep > 75)
+              {
+                send = "And I you, you're too kind";
+              }
+              else if (users[n].rep > 25)
+              {
+                 send = "Ah, thank you, you're too kind";
+              }
+             
+              else
+              {
+                send = "Is that really the truth after all you have done?";
+              }
+           }
+    
+          else if (messageL.includes("good job") || messageL.includes("great job") || (messageL.includes("you") && (messageL.includes("great") || messageL.includes("good") || messageL.includes("perfect"))))
+           {
+             if (users[n].rep > 25)
+             {
+               send = "My thanks, I simply do my best";
+               addRep();
+             }
+             
+             else
+             {
+               send = "If only I could believe your honeyed words... What is it you hope to gain?";
+             }
+           }
+    
+               else if (messageL.includes("why"))
+           {
+             var w = Math.floor(Math.random() * 3);
+      
+             if (w == 0)
+             {
+               bot.sendMessage({to:channelID, message: "I honestly do not know"});
+             }
+       
+             else if (w == 1)
+             {
+               bot.sendMessage({to:channelID, message: "It had to be done"});
+             }
+      
+             else
+             {
+               //var u = genUser();
+               // Will set up manually with our IDs for now after getting nowhere. Intend to return to this, for now dont call genUser()
+              
+               var u = users[Math.floor(Math.random() * users.length)];
+               if (u.nick == null)
+               {
+                    bot.sendMessage({to:channelID, message: "<@" + u.id + "> suggested it to me"});
+               }
+               
+               else
+               {
+                 bot.sendMessage({to:channelID, message: u.nick + " suggested it to me"});
+               }
+             }
+           }
+           
     
   
     
