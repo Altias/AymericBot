@@ -119,14 +119,21 @@ client.on('message', msg => {
   }
   
   var dm = checkDM();
-  var done = false
+  
   
   //First we choose the message
   
-  var send = "";
-  if (msg.content.includes('test') || (dm == true && done == false)) {
+  var send = null;
+  if (msg.content.includes('test') || (dm == true && msg.author.id != client.user.id)) {
     
-    msg.channel.send('done!');
-    done = true
+    
+    
+    //Actually send message
+    
+    if (send != null)
+      {
+          msg.channel.send('done!');
+      }
+    
   }
 });
