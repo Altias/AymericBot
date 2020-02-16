@@ -54,12 +54,6 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.reply('pong');
-  }
-});
-
 client.login("NTE4OTY3NzY5NTg1NDE4MjUw.D2yc_Q.P4nXaukQSe5QaYeqqcd-SkJoS9o");
 
 // Function time!
@@ -77,6 +71,31 @@ function findUser(userID)
   
   return(-1);
 }
+
+function morning(hasToday)
+{
+  
+  var now = new Date();
+  var hr = Math.floor(Math.random()*2) + 11;
+  var min = Math.floor(Math.random()*60);
+  console.log(now);
+  console.log("Morning greeting at " + hr+":"+min+" UTC");
+var millisTill2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hr, min, 0, 0) - now;
+if (millisTill2 < 0 || hasToday == true) {
+     millisTill2 += 86400000;
+}
+
+  
+  //console.log("Called!");
+  setTimeout(function(){
+    
+    
+    morning(true);
+    
+  }, millisTill2);
+}
+
+morning(false);
 
 // Message choices
 
