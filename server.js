@@ -89,7 +89,7 @@ if (millisTill2 < 0 || hasToday == true) {
   //console.log("Called!");
   setTimeout(function(){
     
-    
+    const channel = client.channels.get("477532221964812339");
     morning(true);
     
   }, millisTill2);
