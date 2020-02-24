@@ -10,6 +10,7 @@ var rawUsers;
 var users
 var request = require('request');
 var greet = "https://cdn.glitch.com/d3c5f6a7-4c3a-48f5-a549-abc96c5493c1%2Fgreet.mp3?v=1582579075866";
+var nowVC = null;
 
 function updateUsers()
 {
@@ -714,6 +715,7 @@ client.on('message', msg => {
                      //request(greet).pipe(fs.createWriteStream('greet.mp3'));
                      const stream = fs.createReadStream('/app/greet.mp3');
                      connection.playStream(stream);
+                     nowVC = msg.guild.voiceConnection;
                    
                    }).catch(console.log);
                   
@@ -727,20 +729,13 @@ client.on('message', msg => {
     
           else if (messageL.includes("leave") && (messageL.includes("voice") || messageL.includes("vc")))
             {
-              if(msg.member.voiceChannel)
+              if(nowVC != null)
                 {
-                  var nowVC = msg.guild.voiceConnection;
-                  
-                  if (nowVC === msg.member.voiceChannel)
-                    {
-                        msg.member.voiceChannel.leave();
-                        send = "I shall take my leave";
-                    }
-                  
-                  else
-                    {
-                      send = "We are not in a voice call together";
-                    }
+
+                  msg.member.voiceChannel.leave();
+                  nowVC = null;
+                  send = "I shall take my leave";
+                 
                 }
               
               else
