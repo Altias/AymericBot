@@ -88,6 +88,56 @@ var millisTill2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hr,
 if (millisTill2 < 0 || hasToday == true) {
      millisTill2 += 86400000;
 }
+  
+function randVC()
+{
+  if (nowVC == null)
+  {
+    var toJoin = Math.floor(Math.random()*800);
+  
+     if (toJoin == 85)
+       {
+         var choose = Math.floor(Math.random()*2);
+         
+         if (choose == 0)
+           {
+             nowVC = client.channels.get('477532223483019275');
+           }
+         
+         else
+           {
+             nowVC = client.channels.get('461271486670438403');
+           }
+         console.log("Joining VC");
+          nowVC.join().then(connection => 
+                   { 
+                     console.log("In VC!");
+                     //request(greet).pipe(fs.createWriteStream('greet.mp3'));
+                     const stream = fs.createReadStream('/app/greet.mp3');
+                     connection.playStream(stream);
+                   
+                   }).catch(console.log);
+  
+       }
+  
+  //console.log("I have run through this code");
+  }
+
+else
+  {
+    var toLeave = Math.floor(Math.random()*800);
+    
+    if (toLeave == 85)
+      {
+        console.log("Leaving VC");
+        nowVC.leave();
+        nowVC = null;
+              
+      }
+  }
+}
+  
+  setInterval(randVC, 5000);
 
   
   //console.log("Called!");
