@@ -8,6 +8,8 @@ const app = express();
 var fs = require('fs');
 var rawUsers;
 var users
+var request = require('request');
+var greet = "https://cdn.glitch.com/d3c5f6a7-4c3a-48f5-a549-abc96c5493c1%2Fgreet.mp3?v=1582579075866";
 
 function updateUsers()
 {
@@ -703,8 +705,18 @@ client.on('message', msg => {
             {
               if(msg.member.voiceChannel)
                 {
-                  msg.member.voiceChannel.join();
+                  //msg.member.voiceChannel.join();
                   send = "I will gladly speak with you";
+                  
+                   msg.member.voiceChannel.join().then(connection => 
+                   { 
+                     console.log("In VC!");
+                     //request(greet).pipe(fs.createWriteStream('greet.mp3'));
+                     const stream = fs.createReadStream('/app/greet.mp3');
+                     connection.playStream(stream);
+                   
+                   }).catch(console.log);
+                  
                 }
               
               else
