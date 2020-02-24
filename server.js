@@ -699,6 +699,25 @@ client.on('message', msg => {
               }
            }
     
+          else if (messageL.includes("join") && (messageL.includes("voice") || messageL.includes("vc")))
+            {
+              if(msg.member.voiceChannel)
+                {
+                  msg.member.voiceChannel.join();
+                  send = "I will gladly speak with you";
+                }
+              
+              else
+                {
+                  send = "My apologies, but you are not in a voice channel";
+                }
+            }
+    
+          else if (messageL.includes("leave") && (messageL.includes("voice") || messageL.includes("vc")))
+            {
+              
+            }
+    
           else if (messageL.includes("good job") || messageL.includes("great job") || (messageL.includes("you") && (messageL.includes("great") || messageL.includes("good") || messageL.includes("perfect"))))
            {
              if (users[n].rep > 25)
