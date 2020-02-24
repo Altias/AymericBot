@@ -715,7 +715,26 @@ client.on('message', msg => {
     
           else if (messageL.includes("leave") && (messageL.includes("voice") || messageL.includes("vc")))
             {
+              if(msg.member.voiceChannel)
+                {
+                  var nowVC = msg.guild.voiceConnection;
+                  
+                  if (nowVC === msg.member.voiceChannel)
+                    {
+                        msg.member.voiceChannel.leave();
+                        send = "I shall take my leave";
+                    }
+                  
+                  else
+                    {
+                      send = "We are not in a voice call together";
+                    }
+                }
               
+              else
+                {
+                  send = "We are not in a voice call together";
+                }
             }
     
           else if (messageL.includes("good job") || messageL.includes("great job") || (messageL.includes("you") && (messageL.includes("great") || messageL.includes("good") || messageL.includes("perfect"))))
