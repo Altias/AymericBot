@@ -834,6 +834,11 @@ client.on('message', msg => {
              }
            }
     
+    else if ((messageL.includes('z') || messageL.includes('zelda') || messageL.includes('278256880508207114')) && messageL.includes('baby') && messageL.includes('?'))
+      {
+        send = "No";
+      }
+    
           else  if (messageL.includes('?'))
            {
                var yn = Math.floor(Math.random() * 2);
