@@ -178,7 +178,7 @@ client.on('message', msg => {
   
   var dm = checkDM();
   
-  client.user.setActivity('you with Version 3.0', { type: 'LISTENING' });
+  client.user.setActivity('Tetris instead of filling out paperwork', { type: 'PLAYING' });
   
     function giveNick()
   {
