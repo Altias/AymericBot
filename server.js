@@ -178,7 +178,8 @@ client.on('message', msg => {
   
   var dm = checkDM();
   
-  client.user.setActivity('Tetris instead of filling out paperwork', { type: 'PLAYING' });
+  var tetrisFacts = [];
+  client.user.setActivity('Tetris, '', { type: 'PLAYING' });
   
     function giveNick()
   {
