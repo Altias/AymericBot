@@ -54,6 +54,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 client.on('ready', () => {
+  var tetrisFacts = ['created by Russian software engineer Alexey Pajitnov','first released in 1984 for the Eletronika 60','which had to be banned from the Moscow Medical Institute because producitivity had dropped because of it','released in 1986 for IBM PC','which has a world record for being the most ported game in history as of'];
+  client.user.setActivity('Tetris, ' + tetrisFacts[Math.floor(Math.random() * tetrisFacts.length)], { type: 'PLAYING' });
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
@@ -179,7 +181,7 @@ client.on('message', msg => {
   var dm = checkDM();
   
   var tetrisFacts = [];
-  client.user.setActivity('Tetris, '', { type: 'PLAYING' });
+  client.user.setActivity('Tetris, ' + tetrisFacts[Math.floor(Math.random() * tetrisFacts.length)], { type: 'PLAYING' });
   
     function giveNick()
   {
