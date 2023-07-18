@@ -4,17 +4,25 @@
 // init project
 const express = require("express");
 const app = express();
+const cron = require("node-cron");
 
 var fs = require('fs');
 var rawUsers;
 var users
 var request = require('request');
-var greet = "https://cdn.glitch.com/d3c5f6a7-4c3a-48f5-a549-abc96c5493c1%2Fgreet.mp3?v=1582579075866";
+var greet = "greet.mp3";
 var nowVC = null;
+
+cron.schedule('0 */2 * * *', () => {
+	console.log('Scheduled reboot')
+     return process.exit(82);
+});
+
+process.on('unhandledRejection', up => {throw up});
 
 function updateUsers()
 {
-    rawUsers = fs.readFileSync('/app/usrs.json');
+    rawUsers = fs.readFileSync('usrs.json');
     users = JSON.parse(rawUsers);
 }
 
@@ -45,10 +53,7 @@ app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendStatus(200);
 });
-app.listen(listener.address.port);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 250000);
+
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -59,7 +64,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.login("NDcxODY1NDE4NjU5NjU5Nzk2.XfFO4g.ejYe5s3m4e8FPdZqhM1dEe99d_0");
+client.login("NOTREAL");
 
 
 // Function time!
@@ -78,6 +83,17 @@ function findUser(userID)
   return(-1);
 }
 
+function writeUsers()
+{
+        var newJ = JSON.stringify(users);
+
+        fs.writeFile('usrs.json', newJ, function(err){
+			console.log(err);
+		});
+	console.log("User Data Updated!");
+}
+
+
 function morning(hasToday)
 {
   
@@ -90,6 +106,9 @@ var millisTill2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hr,
 if (millisTill2 < 0 || hasToday == true) {
      millisTill2 += 86400000;
 }
+
+
+
   
 function randVC()
 {
@@ -115,7 +134,7 @@ function randVC()
                    { 
                      console.log("In VC!");
                      //request(greet).pipe(fs.createWriteStream('greet.mp3'));
-                     const stream = fs.createReadStream('/app/greet.mp3');
+                     const stream = fs.createReadStream(greet);
                      connection.playStream(stream);
                    
                    }).catch(console.log);
@@ -529,6 +548,11 @@ client.on('message', msg => {
              
              addRep();
            }
+
+	  else if (messageL.includes("reboot now")&&users[n].id == users[0].id)
+	  {
+		return process.exit(82);
+	  }
     
           else if (messageL.includes("want") && messageL.includes("drink"))
            {
@@ -755,7 +779,7 @@ client.on('message', msg => {
     
           else if (messageL.includes("join") && (messageL.includes("voice") || messageL.includes("vc")))
             {
-              if(msg.member.voiceChannel)
+              if(msg.member.voiceChannel != null)
                 {
                   //msg.member.voiceChannel.join();
                   send = "I will gladly speak with you";
@@ -764,9 +788,9 @@ client.on('message', msg => {
                    { 
                      console.log("In VC!");
                      //request(greet).pipe(fs.createWriteStream('greet.mp3'));
-                     const stream = fs.createReadStream('/app/greet.mp3');
-                     connection.playStream(stream);
-                     nowVC = msg.guild.voiceConnection;
+                     const stream = fs.createReadStream(greet);
+                     connection.playStream(greet);
+                     nowVC = msg.member.voiceChannel;
                    
                    }).catch(console.log);
                   
@@ -894,7 +918,8 @@ client.on('message', msg => {
                      
                      msg.channel.send(send);
                      msg.channel.stopTyping();
-      
+     		
+					writeUsers();
       
       }, 3000);
         
