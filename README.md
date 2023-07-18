@@ -2,4 +2,4 @@ This project has old commits from when it was hosted on Glitch, however there is
 
 The bot token isn't here, and with each commit i will also empty the user database json file for the sake of those users' privacy.
 
-Aymeric is a character from Final Fantasy XIV, this Discord bot is a fan creation and not associated with Square Enix.
+Aymeric is a character from Final Fantasy XIV, this Discord bot is a fan creation and not associated with Square Enix. I have multiple bots based on other characters, however the changes between them are reletively small.
